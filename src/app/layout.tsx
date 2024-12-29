@@ -12,7 +12,7 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-	title: 'Start Upps',
+	title: 'Home',
 	description: 'Pitch, Vote and Grow',
 };
 
