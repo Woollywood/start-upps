@@ -5,10 +5,9 @@ import { getServerSession } from 'next-auth';
 
 export const Navbar: NextPage = async () => {
 	const session = await getServerSession();
-	console.log(session);
 
 	return (
-		<header className='font-work-sans bg-foreground px-5 py-3 shadow-sm'>
+		<header className='bg-foreground px-5 py-3 font-work-sans shadow-sm'>
 			<nav className='flex items-center justify-between'>
 				<Link href='/'>
 					<Image src='/logo.svg' alt='logo' width={144} height={30} />
