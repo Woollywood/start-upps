@@ -4,22 +4,16 @@ import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '../ui/button';
+import { Author, Startup } from '@/sanity/types';
+
+export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author };
 
 interface Props {
 	post: StartupTypeCard;
 }
 
 export const StartupCard: React.FC<Props> = ({ post }) => {
-	const {
-		_id,
-		_createdAt,
-		views,
-		author: { _id: authorId, name },
-		title,
-		category,
-		image,
-		description,
-	} = post;
+	const { _id, _createdAt, views, author, title, category, image, description } = post;
 
 	return (
 		<li className='startup-card group'>
@@ -32,14 +26,14 @@ export const StartupCard: React.FC<Props> = ({ post }) => {
 			</div>
 			<div className='flex-between mt-5 gap-5'>
 				<div>
-					<Link href={`/user/${authorId}`}>
-						<p className='text-16-medium line-clamp-1 hover:underline'>{name}</p>
+					<Link href={`/user/${author?._id}`}>
+						<p className='text-16-medium line-clamp-1 hover:underline'>{author?.name}</p>
 					</Link>
 					<Link href={`/start-up/${_id}`}>
 						<h3 className='text-26-semibold line-clamp-1 hover:underline'>{title}</h3>
 					</Link>
 				</div>
-				<Link href={`/user/${authorId}`}>
+				<Link href={`/user/${author?._id}`}>
 					<Image
 						src='https://placehold.co/48x48'
 						alt='placeholder'
@@ -52,11 +46,11 @@ export const StartupCard: React.FC<Props> = ({ post }) => {
 			<Link href={`/start-up/${_id}`} className='group/description'>
 				<p className='startup-card_desc group-hover/description:underline'>{description}</p>
 				<div className='startup-card_img relative overflow-hidden'>
-					<Image src={image} fill alt='placeholder' className='object-cover' />
+					<Image src={image || ''} fill alt='placeholder' className='object-cover' />
 				</div>
 			</Link>
 			<div className='flex-between mt-5 gap-3'>
-				<Link href={{ query: { query: category.toLowerCase() } }}>
+				<Link href={{ query: { query: category?.toLowerCase() } }}>
 					<p className='text-16-medium hover:underline'>{category}</p>
 				</Link>
 				<Button className='startup-card_btn transition-shadow hover:shadow-300' asChild>
