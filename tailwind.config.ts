@@ -10,11 +10,14 @@ export default {
 		extend: {
 			container: {
 				center: true,
-				padding: '2remF'
+				padding: '2remF',
 			},
 			colors: {
 				background: 'var(--background)',
 				foreground: 'var(--foreground)',
+			},
+			fontFamily: {
+				primary: ['var(--font-primary)'],
 			},
 		},
 	},
