@@ -7,9 +7,10 @@ export const STARTUPS_QUERY =
   slug,
   _createdAt,
   author -> {
-    _id, name, slug, image, bio},
+    _id, name, username, image, bio},
   views,
   description,
   category,
-  image
+  image,
+  pitch
 }`);
