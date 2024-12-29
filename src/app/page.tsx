@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
 import { SearchForm } from '@/components/shared/SearchForm';
 import { StartupCard, StartupTypeCard } from '@/components/shared/StartupCard';
-import { client } from '@/sanity/lib/client';
 import { STARTUPS_QUERY } from '@/sanity/lib/queries';
+import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 
 interface Props {
 	searchParams: Promise<{ query?: string }>;
@@ -10,7 +10,8 @@ interface Props {
 
 const Home: NextPage<Props> = async ({ searchParams }) => {
 	const { query } = await searchParams;
-	const posts = (await client.fetch(STARTUPS_QUERY)) as unknown as StartupTypeCard[];
+	const params = { search: query || null };
+	const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
 
 	return (
 		<>
@@ -27,12 +28,16 @@ const Home: NextPage<Props> = async ({ searchParams }) => {
 				<p className='text-30-semibold'>{query ? `Search Results for ${query}` : 'All Startups'}</p>
 				<ul className='card_grid mt-7'>
 					{posts?.length > 0 ? (
-						posts.map((post) => <StartupCard key={post._id} post={post} />)
+						(posts as unknown as StartupTypeCard[]).map((post) => (
+							<StartupCard key={post._id} post={post} />
+						))
 					) : (
 						<p className='no-result'>No startups found</p>
 					)}
 				</ul>
 			</section>
+
+			<SanityLive />
 		</>
 	);
 };
