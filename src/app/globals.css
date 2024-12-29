@@ -5,6 +5,8 @@
 @layer base {
 	:root {
 		--radius: 0.5rem;
+
+		--navbar-height: 3.375rem;
 	}
 }
 

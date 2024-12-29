@@ -7,8 +7,8 @@ export const Navbar: NextPage = async () => {
 	const session = await getServerSession();
 
 	return (
-		<header className='bg-foreground px-5 py-3 font-work-sans shadow-sm'>
-			<nav className='flex items-center justify-between'>
+		<header className='h-navbar-height relative font-work-sans'>
+			<nav className='h-navbar-height fixed left-0 top-0 flex w-full items-center justify-between bg-white px-5 py-3 shadow-sm'>
 				<Link href='/'>
 					<Image src='/logo.svg' alt='logo' width={144} height={30} />
 				</Link>
