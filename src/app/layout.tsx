@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
-import './globals.css';
 import { Navbar } from '@/components/shared/Navbar';
+
+import './globals.css';
+import 'easymde/dist/easymde.min.css';
 
 const workSans = Work_Sans({
 	subsets: ['latin'],
