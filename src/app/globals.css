@@ -8,6 +8,10 @@
 
 		--navbar-height: 3.375rem;
 	}
+
+	body {
+		@apply overflow-x-hidden;
+	}
 }
 
 @layer utilities {

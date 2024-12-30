@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Skeleton } from '../ui/skeleton';
 import { Button } from '../ui/button';
-import { LogOut, Plus, User } from 'lucide-react';
+import { LogOut, Plus } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export const Userbar: React.FC = () => {
 	const { data: session, status } = useSession();
@@ -13,9 +14,13 @@ export const Userbar: React.FC = () => {
 	if (status === 'loading') {
 		return (
 			<div className='flex items-center gap-1'>
-				<Skeleton className='h-9 w-20 bg-primary' />
-				<Skeleton className='h-9 w-20 bg-primary' />
-				<Skeleton className='h-9 w-20 bg-primary' />
+				<Skeleton className='hidden h-10 w-20 bg-primary sm:block' />
+				<Skeleton className='hidden h-10 w-20 bg-primary sm:block' />
+				<Skeleton className='hidden h-10 w-10 rounded-full bg-primary sm:block' />
+
+				<Skeleton className='block h-10 w-10 bg-primary sm:hidden' />
+				<Skeleton className='block h-10 w-10 bg-primary sm:hidden' />
+				<Skeleton className='block h-10 w-10 rounded-full bg-primary sm:hidden' />
 			</div>
 		);
 	}
@@ -30,9 +35,6 @@ export const Userbar: React.FC = () => {
 					<form action='http://localhost:3000/api/auth/signout' className='userbar-item--desktop'>
 						<Button>Logout</Button>
 					</form>
-					<Link href={`/user/${session.user?.id}`} className='userbar-item--desktop'>
-						<Button>Profile</Button>
-					</Link>
 
 					<Link href='/start-up/create' className='flex sm:hidden'>
 						<Button size='icon'>
@@ -44,10 +46,12 @@ export const Userbar: React.FC = () => {
 							<LogOut className='!size-5' />
 						</Button>
 					</form>
-					<Link href={`/user/${session.user?.id}`} className='flex sm:hidden'>
-						<Button size='icon'>
-							<User className='!size-5' />
-						</Button>
+
+					<Link href={`/user/${session.user?.id}`}>
+						<Avatar>
+							<AvatarImage src={session.user.image || ''} alt={session.user.name || 'profile avatar'} />
+							<AvatarFallback>{session.user.name?.[0].toUpperCase()}</AvatarFallback>
+						</Avatar>
 					</Link>
 				</>
 			)}
