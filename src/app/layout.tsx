@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
 import { Navbar } from '@/components/shared/Navbar';
+import { NextAuthProvider } from '@/providers/NextAuthProvider';
 
 import './globals.css';
 import 'easymde/dist/easymde.min.css';
@@ -24,8 +25,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={workSans.variable}>
-				<Navbar />
-				{children}
+				<NextAuthProvider>
+					<Navbar />
+					{children}
+				</NextAuthProvider>
 			</body>
 		</html>
 	);
