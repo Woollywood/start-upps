@@ -5,6 +5,7 @@ import { NextAuthProvider } from '@/providers/NextAuthProvider';
 
 import './globals.css';
 import 'easymde/dist/easymde.min.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const workSans = Work_Sans({
 	subsets: ['latin'],
@@ -29,6 +30,7 @@ export default function RootLayout({
 					<Navbar />
 					{children}
 				</NextAuthProvider>
+				<Toaster />
 			</body>
 		</html>
 	);
