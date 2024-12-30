@@ -1,6 +1,6 @@
-import { StartupTypeCard } from '@/components/shared/StartupCard';
+import { StartupCard, StartupTypeCard } from '@/components/shared/StartupCard';
 import { client } from '@/sanity/lib/client';
-import { STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
 import moment from 'moment';
 import { NextPage } from 'next';
 import Image from 'next/image';
@@ -19,7 +19,13 @@ interface Props {
 
 const Page: NextPage<Props> = async ({ params }) => {
 	const { id } = await params;
-	const post = (await client.fetch(STARTUP_BY_ID_QUERY, { id })) as unknown as StartupTypeCard;
+	const [post, playlists] = await Promise.all([
+		client.fetch(STARTUP_BY_ID_QUERY, { id }) as unknown as StartupTypeCard,
+		client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks' }),
+	]);
+
+	const hasEditorPosts = playlists && playlists.select && playlists.select.length > 0;
+	const editorPosts = playlists?.select as unknown as StartupTypeCard[];
 
 	if (!post) {
 		notFound();
@@ -65,6 +71,14 @@ const Page: NextPage<Props> = async ({ params }) => {
 					)}
 				</div>
 				<hr className='divider' />
+				{hasEditorPosts && (
+					<div className='mx-auto max-w-4xl'>
+						<p className='text-30-semibold'>Editor Picks</p>
+						<ul className='card_grid-sm mt-7'>
+							{editorPosts?.map((post) => <StartupCard key={post._id} post={post} />)}
+						</ul>
+					</div>
+				)}
 				<Suspense fallback={<Skeleton className='view_skeleton' />}>
 					<View id={id} />
 				</Suspense>
