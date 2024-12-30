@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import { SearchForm } from '@/components/shared/SearchForm';
-import { SanityLive } from '@/sanity/lib/live';
 import StartupCards from './components/StartupCards';
 import { Suspense } from 'react';
 import StartupCardsSkeleton from './components/StartupCardsSkeleton';
@@ -29,8 +28,6 @@ const Home: NextPage<Props> = async ({ searchParams }) => {
 					<StartupCards query={query} />
 				</Suspense>
 			</section>
-
-			<SanityLive />
 		</>
 	);
 };

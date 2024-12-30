@@ -40,33 +40,34 @@ const StartupForm: React.FC = () => {
 	const [state, dispatch, isPending] = useActionState(createStartup, undefined);
 
 	useEffect(() => {
-		if (Object.keys(state?.errors || {}).length > 0) {
-			toast({
-				title: 'Error',
-				description: 'Validation errors',
-				variant: 'destructive',
-			});
-		} else {
-			if (state?.response?.status === 401) {
+		const observe = () => {
+			if (!state) {
+				return;
+			}
+
+			if (Object.keys(state?.errors || {}).length > 0) {
 				toast({
 					title: 'Error',
-					description: state.response.message,
-					variant: 'destructive',
-				});
-			} else if (state?.response?.status !== 200) {
-				toast({
-					title: 'Error',
-					description: state?.response?.message,
+					description: 'Validation errors',
 					variant: 'destructive',
 				});
 			} else {
-				toast({
-					title: 'Success',
-					description: 'Successfully created',
-					variant: 'default',
-				});
+				if (state?.response?.status === 401) {
+					toast({
+						title: 'Error',
+						description: state.response.message,
+						variant: 'destructive',
+					});
+				} else if (state?.response?.status !== 200) {
+					toast({
+						title: 'Error',
+						description: state?.response?.message,
+						variant: 'destructive',
+					});
+				}
 			}
-		}
+		};
+		observe();
 	}, [state, toast]);
 
 	return (
