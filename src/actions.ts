@@ -6,6 +6,7 @@ import { writeClient } from './sanity/lib/writeClient';
 import { client } from './sanity/lib/client';
 import { AUTHOR_BY_GITHUB_ID_QUERY } from './sanity/lib/queries';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 const schema = z.object({
 	title: z.string().min(3).max(100),
@@ -85,6 +86,7 @@ export const createStartup = async (prevState: FormState, formData: FormData): P
 	} catch (error) {
 		return returnWithMerge({ response: { message: (error as Error).message } });
 	} finally {
+		revalidatePath('/');
 		redirect('/');
 	}
 };

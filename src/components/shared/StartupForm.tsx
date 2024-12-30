@@ -35,7 +35,7 @@ const StartupForm: React.FC = () => {
 		};
 
 		fetchUser();
-	}, [session?.user.id]);
+	}, [session?.user.id, toast]);
 
 	const [state, dispatch, isPending] = useActionState(createStartup, undefined);
 
@@ -67,7 +67,7 @@ const StartupForm: React.FC = () => {
 				});
 			}
 		}
-	}, [state]);
+	}, [state, toast]);
 
 	return (
 		<form action={dispatch} className='startup-form'>
