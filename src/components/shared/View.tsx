@@ -30,7 +30,7 @@ const View: NextPage<Props> = async ({ id }) => {
 				<Ping />
 			</div>
 			<div className='view-text'>
-				<span className='font-black'>Views: {totalViews}</span>
+				<span className='font-black'>Views: {totalViews || 0}</span>
 			</div>
 		</div>
 	);
